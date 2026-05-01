@@ -41,6 +41,24 @@ else
     echo "Le résultat est faux"
 fi
 
+#il faut peut etre le faire de manière automatique car si non l'élève n'aura jamais 20
+if [ "$nb" -eq 0 ]; then
+    if [ "$result" -eq 1 ]; then
+        echo "Le programme gère correctement le cas particulier (factorielle de 0)"
+        note=$((note+3))
+    else
+        echo "Le programme ne gère PAS le cas particulier (factorielle de 0)"
+    fi
+fi
+
+if grep -q "int factorielle( int number )" * ; then
+    echo "Le programme contient une méthode avec la signature int factorielle"
+    note=$((note+2))
+else 
+    echo "Le programme ne contient pas de méthode avec la signature int factorielle"
+fi
+
+
 echo "La note finale est de : $note"
 
 make clean
