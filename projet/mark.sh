@@ -6,7 +6,7 @@ make
 
 read firstname surname < readme.txt
 if ! test -f "notes.xls"; then
-    echo "Nom,Prénom,Note" >> notes.xls
+    echo "Nom,Prénom,Note" >> notes.xlsx
 fi
 
 note=0
@@ -16,7 +16,7 @@ note=0
 if test -f "factorielle"; then
     note=$((note+2))
 else
-    echo "'$firstname','$surname',$note" >> notes.xls
+    echo "'$firstname','$surname',$note" >> notes.xlsx
     exit 1
 fi
 
@@ -43,6 +43,6 @@ note=$((note + $(./factorial_verification.sh)))
 
 
 #note finale et csv
-echo "'$firstname','$surname',$note" >> notes.xls
+echo "'$firstname','$surname',$note" >> notes.xlsx
 
 make clean
