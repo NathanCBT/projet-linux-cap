@@ -5,8 +5,8 @@ make
 #création du csv s'il n'existe pas
 
 read firstname surname < readme.txt
-if ! test -f "notes.xlsx"; then
-    echo "Nom,Prénom,Note" >> notes.xlsx
+if ! test -f "notes.csv"; then
+    echo "Nom,Prénom,Note" | iconv -f UTF-8 -t ISO-8859-1 >> notes.csv
 fi
 
 note=0
@@ -16,7 +16,7 @@ note=0
 if test -f "factorielle"; then
     note=$((note+2))
 else
-    echo "'$firstname','$surname',$note" >> notes.xlsx
+    echo "'$firstname','$surname',$note" >> notes.csv
     exit 1
 fi
 
@@ -96,6 +96,6 @@ fi
 
 
 #note finale et csv
-echo "'$firstname','$surname',$note" >> notes.xlsx
+echo "'$firstname','$surname',$note" >> notes.csv
 
 make clean
