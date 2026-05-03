@@ -2,26 +2,26 @@
 
 make
 
-#création du csv s'il n'existe pas
 
+#création du csv s'il n'existe pas
 read firstname surname < readme.txt
-if ! test -f "notes.csv"; then
-    echo "Nom,Prénom,Note" | iconv -f UTF-8 -t ISO-8859-1 >> notes.csv
+if ! test -f "note.csv"; then
+    echo "Nom,Prénom,Note" >> note.csv
 fi
 
 note=0
 
-#compilation
 
+#compilation
 if test -f "factorielle"; then
     note=$((note+2))
 else
-    echo "'$firstname','$surname',$note" >> notes.csv
+    echo "'$firstname','$surname',$note" >> note.csv
     exit 1
 fi
 
-#messages d'erreur
 
+#messages d'erreur
 msg=$(./factorielle)
 if  [ "$msg" = "Erreur: Mauvais nombre de parametres" ]; then
     note=$((note+4))
@@ -32,19 +32,34 @@ if [ "$msg" = "Erreur: nombre negatif" ]; then
     note=$((note+4))
 fi
 
-if grep -q "int factorielle( int number )" * ; then
+
+# signature dans main.c (obligatoire)
+has_sig=1
+
+if ! grep -q "int factorielle( int number )" main.c 2>/dev/null; then
+    has_sig=0
+fi
+
+
+# si header.h existe, il doit aussi avoir la signature
+if [ -f header.h ] && ! grep -q "int factorielle( int number )" header.h 2>/dev/null; then
+    has_sig=0
+fi
+
+if [ $has_sig -eq 1 ]; then
     note=$((note+2))
 fi
 
-#points factorielle
 
+#points factorielle
 note=$((note + $(./factorial_verification.sh)))
 
-#malus
 
+#malus
 note=$((note + $(./penalty.sh)))
 
+
 #note finale et csv
-echo "'$firstname','$surname',$note" >> notes.csv
+echo "'$firstname','$surname',$note" >> note.csv
 
 make clean
