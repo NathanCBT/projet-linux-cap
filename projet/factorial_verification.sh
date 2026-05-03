@@ -27,12 +27,12 @@ while [ $index -le 10 ] && [ $is_result_true -eq 1 ]; do
     result=$(./factorielle "$index")
     true_result=$(correct_factorial "$index")
     if [ $result -ne $true_result ]; then
-        is_result_true = 0
+        is_result_true=0
     fi
     index=$((index+1))
 done
 
-if [ $is_result_true = 1 ]; then
+if [ $is_result_true -eq 1 ]; then
     note=$((note+5))
 fi
 
