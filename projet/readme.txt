@@ -1,1 +1,2 @@
-John Doe
+Marine Dejussel
+Nathan Cobat
